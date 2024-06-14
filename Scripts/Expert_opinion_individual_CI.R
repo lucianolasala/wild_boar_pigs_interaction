@@ -1,6 +1,11 @@
 #--------------------------------------------------------------
 # Evaluacion de consistencia de matriz de cada experto
 #--------------------------------------------------------------
+# A continuación se presentan las matrices de confusión de todos
+# los expertos consultados (n = 8) y se calcula el ratio de consistencia (CR)
+# de la matriz de cada experto. En base a este análisis, se seleccionaron
+# solo los expertos con CR > 0.1. Con los expertos que quedaron (n = 4), 
+# se armó el archivo "datosCrudosExpertos" utilizado más adeante.
 
 #----------------------------------------------------------
 # 1. BFP 
@@ -28,6 +33,8 @@ weights.1 <- function(bfp){
 }
 weights.1(eigenvector.1)
 
+# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
+
 n <- nrow(bfp)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI / RI
@@ -50,7 +57,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9  # Index for a 4x4 matrix
 
 cane <- matrix(c(1,0.5,0.25,0.2,
                  2,1,0.167,0.125,
@@ -83,7 +90,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -92,7 +98,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9
 
 poli <- matrix(c(1,0.333,0.143,0.2,
                  3,1,0.167,0.333,
@@ -112,12 +118,10 @@ weights.1 <- function(poli){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(poli)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
-CR  # 0.04301525+0i
+CR
 
 check_consistency <- function(CR) {
   real_CR <- Re(CR)  # Extract the real part of CR
@@ -127,7 +131,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -136,7 +139,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9
 
 la <- matrix(c(1,0.143,0.167,0.2,
                7,1,0.143,0.2,
@@ -156,8 +159,6 @@ weights.1 <- function(la){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(la)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
@@ -171,7 +172,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -180,7 +180,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9
 
 lfls <- matrix(c(1,0.25,0.125,0.125,
                  4,1,0.2,0.2,
@@ -200,8 +200,6 @@ weights.1 <- function(lfls){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(lfls)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
@@ -215,7 +213,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -224,7 +221,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9
 
 amp <- matrix(c(1,0.2,0.125,0.111,
                 5,1,0.2,0.167,
@@ -244,8 +241,6 @@ weights.1 <- function(amp){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(amp)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
@@ -259,7 +254,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -268,7 +262,7 @@ check_consistency(CR)
 
 rm(list=ls())
 
-RI <- 0.9  # Index for a 4x4 matrix
+RI <- 0.9
 
 amarcos <- matrix(c(1,0.25,0.167,0.143,
                     4,1,0.25,0.167,
@@ -288,8 +282,6 @@ weights.1 <- function(amarcos){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(amarcos)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
@@ -303,7 +295,6 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 
 #----------------------------------------------------------
@@ -311,8 +302,7 @@ check_consistency(CR)
 #----------------------------------------------------------
 
 rm(list=ls())
-
-RI <- 0.9  # Random Index for a 4x4 matrix
+RI <- 0.9  # Index for a 4x4 matrix
 
 aperez <- matrix(c(1,0.25,0.2,0.25,
                    4,1,0.125,0.167,
@@ -332,8 +322,6 @@ weights.1 <- function(aperez){
 }
 weights.1(eigenvector.1)
 
-# Alternativa simple: weights <- eigenvector.1 / sum.eigenvector.1
-
 n <- nrow(aperez)  # Number of criteria
 CI <- (eigenvalue.1-n)/(n-1)
 CR <- CI/RI
@@ -347,6 +335,5 @@ check_consistency <- function(CR) {
     print("The matrix is inconsistent")
   }
 }
-
 check_consistency(CR)
 

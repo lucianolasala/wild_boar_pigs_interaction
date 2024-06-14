@@ -14,11 +14,12 @@ Table of Contents
 ----------
 
 ### Generation of spatial layers
+
 [1. Farm biosecurity layers](./Scripts/Farms_density_by_BS.R)
 
 
-### Expert opinion elicitation
+### Expert elicitation opinion and analytic hierarchy process (AHP)
 
-[1. Google Earth Engine data processing](./Scripts/GEE_data_processing.md)  
+[1. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
 
 
