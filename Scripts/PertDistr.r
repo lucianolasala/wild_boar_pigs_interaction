@@ -1,7 +1,8 @@
-## Pert random number generation, inverse distribution, and density functions.  Uses the built-in beta function in R.
-## By Francisco J. Zagmutt.  
+# Pert random number generation, inverse distribution, and density functions.  
+# Uses the built-in beta function in R.
+# By Francisco J. Zagmutt.  
 
-## Pert distribution RNG
+# Pert distribution RNG
 
 rpert = function(n, min=0, mode=0.5, max=1) {
   mu = (min+4*mode+max)/6
@@ -12,7 +13,7 @@ rpert = function(n, min=0, mode=0.5, max=1) {
   min+(max-min)*rbeta(n,alpha,beta)
 }
 
-## PERT distribution inverse function
+# PERT distribution inverse function
 
 qpert = function(p, min=0, mode=0.5, max=1, lower.tail=T, log.p=F) {
   mu = (min+4*mode+max)/6
@@ -23,7 +24,7 @@ qpert = function(p, min=0, mode=0.5, max=1, lower.tail=T, log.p=F) {
   min+(max-min)*qbeta(p,alpha,beta)
 }
 
-## PERT distribution density 
+# PERT distribution density 
 
 dpert = function(x, min=0, mode=0.5, max=1, lower.tail=T, log.p=F){
   mu = (min+4*mode+max)/6

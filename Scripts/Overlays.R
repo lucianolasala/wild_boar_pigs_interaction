@@ -1,12 +1,12 @@
-##General function to overlay distributions
-#######################################################
-#"Distrs" is a data frame or matrix with simulation results. Assumes at least 2 data columns
-#"Type" is either "cumulative" or "histogram"
-#Notice that this function is just a template.  More details should be added to make it more automated.  For example, axis rescaling when multiple distributions are overlayed
+# General function to overlay distributions
+
+# "Distrs" is a data frame or matrix with simulation results. Assumes at least 2 data columns
+# "Type" is either "cumulative" or "histogram"
+# Notice that this function is just a template.  More details should be added to make it more automated.  For example, axis rescaling when multiple distributions are overlayed
 
 overlay=function(distrs, type="cumulative", verticals=T, legendloc="bottomright", bwd=.5 ,...){
 
-  distrs=na.omit(distrs)#Removes missing values  
+  distrs=na.omit(distrs)# Removes missing values  
   if(type=="cumulative") {
     plot(ecdf(distrs[,1]), verticals=verticals)#Creates first cum plot
     for(i in 2:ncol(distrs)){#Overlays remaining cum plots
