@@ -12,7 +12,7 @@ Table of Contents
 
 ### Generation of spatial layers
 
-[1. Farm biosecurity layers](./Scripts/Farms_density_by_BS.R)
+[1. Farm density by biosecurity level](./Scripts/Farms_density_by_BS.R)
 
 ### Expert elicitation opinion and analytic hierarchy process (AHP)
 

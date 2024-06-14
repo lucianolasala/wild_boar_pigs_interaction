@@ -14,7 +14,6 @@ cases <- read.table("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/SENASA/Enc
 head(cases)
 length(cases$Lon) # 320 granjas
 
-
 # Convert lon and lat to spatial points to extract posittive counties below
 coordinates <- st_as_sf(cases, coords = c("Lon", "Lat"), crs = 4326); head(coordinates)
 
@@ -31,12 +30,11 @@ coordinates <- st_as_sf(cases, coords = c("Lon", "Lat"), crs = 4326); head(coord
 # with the department it intersects with.
 
 # Read departments shapefile
-
 shapefile <- "D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/ARG_adm2.shp"
 dep <- st_read(shapefile)
 dep$NAME_2  # 503
 length(unique(dep$NAME_2))  # 424: la diferencia de 79 deben ser poligonos
-# correspondientes a deptos. multiparte (islas).   
+                            # correspondientes a deptos. multiparte (islas).   
 
 posit_county <- st_join(coordinates, dep, join = st_intersects)
 head(posit_county)
@@ -44,7 +42,6 @@ length(posit_county$NAME_2)  # 320 filas de deptos. con interaccion positiva
 length(unique(posit_county$NAME_2))  # 139 deptos unicos
 
 # Dejar en cases coordenadas y columna Id con nombre de depto.
-
 posit_counties <- posit_county %>%
   mutate(lon = st_coordinates(.)[, 1],
          lat = st_coordinates(.)[, 2]) %>%
@@ -55,7 +52,6 @@ posit_counties <- posit_county %>%
 write.csv(cases, "D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/SENASA/posits_dtos.csv")
 
 # Load raster model
-
 r <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Model_outputs/average.tif")
 
 pr <- raster(r)
@@ -78,10 +74,8 @@ ko <- which(!(dep.id[] %in% kd) & !is.na(dep.id[]) & !is.na(pr[])) # Cells in th
 ka <- c(kv, ko) # All cells
 
 # Rasterize the shapefile with the field "ID"
-
 dep_raster <- rasterize(dep, r, field = "ID_2"); plot(dep_raster)
 writeRaster(dep_raster, "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Deptos/Counties.tif", overwrite = TRUE)
-
 
 #-------------------------------------------------------------------------------
 # Permutations by department
@@ -95,7 +89,7 @@ length(mrisk)  # Si mrisk tiene 503 elementos, por que la longitud da 497??
 head(mrisk)
 
 risk <- data.frame(id = 1:497, r = mrisk)  # Error in data.frame(id = 1:503, r = mrisk) : 
-# arguments imply differing number of rows: 503, 497
+                                           # arguments imply differing number of rows: 503, 497
 head(risk)
 length(risk$r)  # 497
 
@@ -148,7 +142,6 @@ hist(difs1)  # Permuted diffs. distribution under the null
 abline(v = test_stat_1_abs, col = "red")  # Observed difference between null distribution generated with permutations (mean = 0) 
 # and the test statistic (absolute value) 
 
-
 #----------------------------------------------
 # Approximate p-value (two-tail test)
 #----------------------------------------------
@@ -175,7 +168,6 @@ two_tail_p <- table(difs1 >= abs(test_stat_1))[2]/(sum(table(difs1 >= abs(test_s
 
 # Calculo equivalente
 mean(difs1 >= abs(test_stat_1))  
-
 
 #----------------------------------------------
 # P-value (one-tail p value as in t-test)
