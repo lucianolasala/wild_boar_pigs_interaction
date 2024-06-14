@@ -1,5 +1,5 @@
 #----------------------------------------------------------
-# MODEL VALIDATION USING PERMUTATION TESTS
+# Model validation using permutation tests
 #----------------------------------------------------------
 
 rm(list=ls())

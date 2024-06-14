@@ -7,8 +7,6 @@
 **Julián M. Burgos**, Marine and Freshwater Research Institute, Reykjavik, Iceland.   
 
 
-This repository contains code used in analyses related to the publication **Modeling the spatial risk for interaction between wild boar and pig farms in  Argentina**.  
-
 Table of Contents
 ----------
 
@@ -20,6 +18,6 @@ Table of Contents
 
 [1. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
 [2. Function to overlay expert opinions](./Scripts/Overlays.R)  
-[2. Function to generate PETR distributions](./Scripts/PertDistr.R)  
-[3. Analytic Hierarchy Process](./Expert_opinion.R)
-
+[3. Function to generate PETR distributions](./Scripts/PertDistr.R)  
+[4. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)
+[5. Model validation](./Scripts/Validation_final.R)
