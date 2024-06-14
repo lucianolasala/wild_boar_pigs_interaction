@@ -1,5 +1,4 @@
-## Modeling the spatial interaction betweeen wild boar (*Sus scrofa*) 
-and pig farms in Argentina
+## Modeling the spatial interaction betweeen wild boar (*Sus scrofa*) and pig farms in Argentina
 
 <img src="https://user-images.githubusercontent.com/20196847/82152923-d78ba600-983a-11ea-9bfc-2a9115a029f5.jpg" height="100" width="100" img align="right">
 
@@ -17,9 +16,10 @@ Table of Contents
 
 [1. Farm biosecurity layers](./Scripts/Farms_density_by_BS.R)
 
-
 ### Expert elicitation opinion and analytic hierarchy process (AHP)
 
 [1. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
-
+[2. Function to overlay expert opinions](./Scripts/Overlays.R)  
+[2. Function to generate PETR distributions](./Scripts/PertDistr.R)  
+[3. Analytic Hierarchy Process](./Expert_opinion.R)
 
