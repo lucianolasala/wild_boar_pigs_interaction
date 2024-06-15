@@ -2,7 +2,6 @@
 # Transformar rasters base a GTiff y los estandariza a 0-1
 #------------------------------------------------------------------
 
-
 rm(list=ls())
 
 library(magrittr)
@@ -39,7 +38,6 @@ for (asc_file in asc_files) {
   # Print a message to indicate progress
   cat("Converted:", basename(asc_file), "to", basename(tif_file), "/n")
 }
-
 
 #------------------------------------------------------------------
 # Standardize rasters layers to have values between 0-1
@@ -90,4 +88,3 @@ for(i in seq_along(standardized_raster_layers)) {
               format = "GTiff",
               overwrite=T)
 }
-
