@@ -133,13 +133,11 @@ colnames(datos) <- "BS"
 
 crs <- CRS("+init=epsg:4326")
 
-
 #-----------------------------------------------------------------------------
 # Crear objeto SpatialPointsDataFrame
 #-----------------------------------------------------------------------------
 
 spdf <- SpatialPointsDataFrame(coords = coordenadas, data = datos, proj4string = crs)
-
 
 #-------------------------------------------------------------------------------
 # Funcion para contar granjas/celda
@@ -157,7 +155,6 @@ pointcount = function(arg_ras, spdf){
   r2[as.numeric(names(counts))] = counts
   return(r2)
 }
-
 
 #-------------------------------------------------------------------------------
 # Resultado y exploracion del raster
