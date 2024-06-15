@@ -37,7 +37,6 @@ for(i in 1:length(files)){
   writeRaster(reclassified, filename = paste(getwd(), "/Reclass/", basename(files[i]), sep = ''), format = "GTiff", overwrite = TRUE)
 }
 
-
 #--------------------------------------------------------------
 # Discretizar modelos. Alternativa similar 
 #--------------------------------------------------------------
