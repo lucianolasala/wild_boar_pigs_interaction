@@ -199,7 +199,6 @@ length(which(values(BS1) %in% c(1,2)))  # 36
 
 table(BS1[])
 
-
 #---------------------------------------------------------------------
 # BS2
 #---------------------------------------------------------------------
@@ -259,7 +258,6 @@ spdf@data
 
 writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_2", driver = "ESRI Shapefile", overwrite_layer = T)
 
-
 #-----------------------------------------------------------------------------
 # Leer shapefile de existencias y raster
 #-----------------------------------------------------------------------------
@@ -268,7 +266,6 @@ rm(list=ls(all=TRUE))
 
 BS2 <- readOGR("D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/BS_2.shp")
 arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km.asc")
-
 
 #-----------------------------------------------------------------------------
 # Transformar shapefile en data frame
@@ -279,7 +276,6 @@ colnames(BS2.df)
 
 names(BS2.df)[1:3] <- paste(c("BS","x","y"))
 head(BS2.df)
-
 
 #-------------------------------------------------------------------------------
 # Creo un SpatialPointsDataFrame 
@@ -296,7 +292,6 @@ is.data.frame(datos)
 colnames(datos) <- "BS"
 
 crs <- CRS("+init=epsg:4326")
-
 
 #-----------------------------------------------------------------------------
 # Crear objeto SpatialPointsDataFrame
@@ -320,7 +315,6 @@ pointcount = function(arg_ras, spdf){
   r2[as.numeric(names(counts))] = counts
   return(r2)
 }
-
 
 #-------------------------------------------------------------------------------
 # Resultado y exploracion del raster
@@ -353,7 +347,6 @@ table(BS2[])
 
 # 0       1       2     3     4 
 # 34273   182     9     3     1
-
 
 #---------------------------------------------------------------------
 # BS3
@@ -394,7 +387,6 @@ length(rep_coords$COORDS_COMB)  # 20
 # Nota. No se eliminan. Son granjas con misma coordenadas porque deben asignarse 
 # al centro de algún depto./municipio. 
 
-
 #-------------------------------------------------------------------------------
 # Creo un SpatialPointsDataFrame para guardar como ESRI shp. 
 #-------------------------------------------------------------------------------
@@ -419,7 +411,6 @@ spdf@data
 
 writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_3", driver = "ESRI Shapefile", overwrite_layer = T)
 
-
 #-----------------------------------------------------------------------------
 # Leer shapefile de existencias y raster
 #-----------------------------------------------------------------------------
@@ -438,7 +429,6 @@ colnames(BS3.df)
 
 names(BS3.df)[2:3] <- paste(c("x","y"))
 head(BS3.df)
-
 
 #-------------------------------------------------------------------------------
 # Creo un SpatialPointsDataFrame 
@@ -464,7 +454,7 @@ crs <- CRS("+init=epsg:4326")
 spdf <- SpatialPointsDataFrame(coords = coordenadas, data = datos, proj4string = crs)
 
 #-------------------------------------------------------------------------------
-# Funcion para contar granjas / celda
+# Funcion para contar granjas/celda
 #-------------------------------------------------------------------------------
 
 pointcount = function(arg_ras, spdf){

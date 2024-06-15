@@ -22,3 +22,4 @@ Table of Contents
 [3. Function to generate PETR distributions](./Scripts/PertDistr.R)  
 [4. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
 [5. Model validation](./Scripts/Validation_final.R)  
+[6. Discreticize final models](./Scripts/Discreticize_models.R)

@@ -321,7 +321,6 @@ writeRaster(mod_avr, filename = "./Model_Outputs/average.tif",format = "GTiff", 
 writeRaster(mod_per5, filename = "./Model_Outputs/perc_5.tif",format = "GTiff", overwrite = TRUE)
 writeRaster(mod_per95, filename = "./Model_Outputs/perc_95.tif",format = "GTiff", overwrite = TRUE)
 
-
 #--------------------------------------------------------------
 # Discretizar modelos
 #--------------------------------------------------------------
