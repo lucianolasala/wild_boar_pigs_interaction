@@ -24,5 +24,5 @@ Table of Contents
 [5. Model validation](./Scripts/Validation_final.R)  
 [6. Discreticize final models](./Scripts/Discreticize_models.R)
 
-### Data, rasters and figures
+### Data, rasters, and figures to peek at
 [1. Downloads data and rasters to process](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data_%26_figs)
