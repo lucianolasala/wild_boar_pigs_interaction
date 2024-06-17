@@ -17,7 +17,8 @@ length(cases$Lon) # 320 granjas
 # Convert lon and lat to spatial points to extract posittive counties below
 coordinates <- st_as_sf(cases, coords = c("Lon", "Lat"), crs = 4326); head(coordinates)
 
-# Perform spatial join
+#----------------------------------------------------------------------
+# Spatial join
 # join = st_intersects: This parameter specifies the type of 
 # spatial join to be performed. In this case, st_intersects 
 # indicates that the join will be based on whether geometries 
@@ -28,6 +29,7 @@ coordinates <- st_as_sf(cases, coords = c("Lon", "Lat"), crs = 4326); head(coord
 # from both datasets where the geometries intersect. 
 # In this case, it returns an sf object where each point is associated 
 # with the department it intersects with.
+#----------------------------------------------------------------------
 
 # Read departments shapefile
 shapefile <- "D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/ARG_adm2.shp"
