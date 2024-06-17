@@ -25,4 +25,4 @@ Table of Contents
 [6. Discreticize final models](./Scripts/Discreticize_models.R)
 
 ### Data, rasters and figures
-[1. Downloads data and rasters to process](./Data_&_Figs/)
+[1. Downloads data and rasters to process](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data_%26_figs)
