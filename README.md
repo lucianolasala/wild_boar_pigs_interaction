@@ -17,14 +17,14 @@ Table of Contents
 
 ### Expert elicitation opinion and analytic hierarchy process (AHP)
 
-[1. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
-[2. Function to overlay expert opinions](./Scripts/Overlays.R)  
-[3. Function to generate PETR distributions](./Scripts/PertDistr.R)  
-[4. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
-[5. Model validation](./Scripts/Validation_final.R)  
-[6. Discreticize final models](./Scripts/Discreticize_models.R)
+[3. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
+[4. Function to overlay expert opinions](./Scripts/Overlays.R)  
+[5. Function to generate PETR distributions](./Scripts/PertDistr.R)  
+[6. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
+[7. Model validation](./Scripts/Validation_final.R)  
+[8. Discreticize final models](./Scripts/Discreticize_models.R)
 
 ### Data, rasters, and figures
-[1. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
-[2. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
+[9. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
+[10. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 
