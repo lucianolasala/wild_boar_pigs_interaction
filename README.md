@@ -23,3 +23,6 @@ Table of Contents
 [4. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
 [5. Model validation](./Scripts/Validation_final.R)  
 [6. Discreticize final models](./Scripts/Discreticize_models.R)
+
+### Data, rasters and figures
+[1. Downloads data and rasters to process](./Data_&_Figs/)
