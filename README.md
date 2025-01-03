@@ -28,5 +28,5 @@ Table of Contents
 [10. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 
 ### Google Earth Engine app development
-[11. Code](https://github.com/lucianolasala/wild_boar_pigs_interaction/Scripts/GEE_app.md)  
+[11. Code](./Scripts/GEE_app.md)  
 
