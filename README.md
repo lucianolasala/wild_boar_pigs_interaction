@@ -29,4 +29,4 @@ Table of Contents
 
 ### Google Earth Engine app development
 [11. Code](./Scripts/GEE_app.md)  
-[12. Link to online map](https://ee-lucianolasala.projects.earthengine.app/view/wild-boar-pigs-interface)
+[12. Link to online map](<a href="https://ee-lucianolasala.projects.earthengine.app/view/wild-boar-pigs-interface" target="_blank">Link to online map</a>)
