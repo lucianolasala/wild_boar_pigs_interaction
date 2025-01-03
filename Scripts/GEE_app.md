@@ -1,5 +1,5 @@
-## Google Earth Engine app developmment
-#### The following is the JavaScript code used 
+### Google Earth Engine app Developmment
+##### The following is the JavaScript code used to build the GEE web application
 
 ```r
 // Get the projection of the image
