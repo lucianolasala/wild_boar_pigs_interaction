@@ -3,7 +3,7 @@
 <img src="https://user-images.githubusercontent.com/20196847/82152923-d78ba600-983a-11ea-9bfc-2a9115a029f5.jpg" height="100" width="100" img align="right">
 
 >**Luciano F. La Sala**, Instituto de Ciencias Biológicas y Biomédicas del Sur (CONICET-UNS), Bahía Blanca, Argentina.  
-**Nicolás Caruso**, Instituto de Ciencias Biológicas y Biomédicas del Sur (CONICET-UNS), Bahía Blanca, Argentina.   
+**Nicolás C. Caruso**, Instituto de Ciencias Biológicas y Biomédicas del Sur (CONICET-UNS), Bahía Blanca, Argentina.   
    
 
 Table of Contents
@@ -29,4 +29,4 @@ Table of Contents
 
 ### Google Earth Engine app development
 [11. Code](./Scripts/GEE_app.md)  
-[12. Link to online map](https://ee-lucianolasala.projects.earthengine.app/view/wild-boar-pigs-interface)*(Right-click and select "Open link in new tab")*
+[12. Link to online map](https://ee-lucianolasala.projects.earthengine.app/view/wild-boar-pigs-interface) *(Right-click and select "Open link in new tab")*
