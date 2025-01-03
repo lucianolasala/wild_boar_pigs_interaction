@@ -4,8 +4,7 @@
 
 >**Luciano F. La Sala**, Instituto de Ciencias Biológicas y Biomédicas del Sur (CONICET-UNS), Bahía Blanca, Argentina.  
 **Nicolás Caruso**, Instituto de Ciencias Biológicas y Biomédicas del Sur (CONICET-UNS), Bahía Blanca, Argentina.   
-**Julián M. Burgos**, Marine and Freshwater Research Institute, Reykjavik, Iceland.   
-
+   
 
 Table of Contents
 ----------
@@ -29,4 +28,5 @@ Table of Contents
 [10. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 
 ### Google Earth Engine app development
-[11. Code](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/GEE_app)  
+[11. Code](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/GEE_app.md)  
+
