@@ -1,5 +1,5 @@
 #------------------------------------------------------------------
-# Transformar rasters base a GTiff y los estandariza a 0-1
+# Transforma rasters base a GTiff y estandariza a rango 0-1
 #------------------------------------------------------------------
 
 rm(list=ls())
@@ -13,7 +13,7 @@ library(tidyverse)
 library(raster)
 
 #------------------------------------------------------------------
-# Transformar rasters de asc a GTiff
+# Transformar rasters de ascii a GTiff
 #------------------------------------------------------------------
 
 rm(list=ls())

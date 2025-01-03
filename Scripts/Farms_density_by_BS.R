@@ -21,11 +21,11 @@ sapply(pkgs, function(x) library(x, character.only = TRUE))
 options(digits = 8)
 options(max.print = 1000)
 
-#---------------------------------------------------------------------
-# Uso del raster de modelo final para jabalí
-#---------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
+# Uso del raster de modelo final para jabalí para generar un raster de Argentina
+#-----------------------------------------------------------------------------------
 
-arg_ras <- raster("D:/CIC/Analisis/MNE_jabali/Modelling/Final_model_rasters/ENM_argentina.tif")
+arg_ras <- raster("D:/CIC/Analisis/MNE_jabali/Modelling/Final_model_rasters/WB.tif")
 
 # Reemplazo no NA's por ceros
 
