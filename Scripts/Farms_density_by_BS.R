@@ -1,14 +1,9 @@
-#---------------------------------------------------------------------
-# En este script se generan tres rasters con densidad de granjas/10 km2.
-# de acuerdo a tres niveles de bioseguridad (BS).
-
-# En el archivo "nodes.csv", tenemos coordenadas de cada granja y nivel de BS como:
-# Alto = 1
-# Medio = 2
-# Bajo = 3
+# This script generates three raster layers representing farm density in 100-square km pixels
+# according to three different biosecurity levels (BS). 
+# We use a file "nodes.csv" that has coordinates for every farm and their respective BS level 
+# defined as "high" (1), "medium" (2), or "low" (3).
 
 # El raster del modelo de jabalí (ENM_argentina) se utiliza como "base".
-#---------------------------------------------------------------------
 
 # Paquetes y librerías
 
