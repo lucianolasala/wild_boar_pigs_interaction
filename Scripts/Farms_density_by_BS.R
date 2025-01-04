@@ -48,10 +48,9 @@ nodos <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", 
 colnames(nodos); head(nodos)
 
 #---------------------------------------------------------------------
-# BS1
+# BS1: subsetting BS1 farms
 #---------------------------------------------------------------------
 
-# Subset each BS level
 BS_1 <- subset(nodos, BS == "High", select = c(Lat, Lon, BS))
 length(BS_1$Lat)  # 37
 which(is.na(BS_1$Lat|BS_1$Lon))  # 0
@@ -69,9 +68,9 @@ length(unique(BS_1$COORDS_COMB))  # 37
 rep_coords <- BS_1[duplicated(BS_1$COORDS_COMB),] 
 length(rep_coords$COORDS_COMB)  # 0
 
-#-------------------------------------------------------------------------------
-# Creo un SpatialPointsDataFrame para guardar como ESRI shp. 
-#-------------------------------------------------------------------------------
+#---------------------------------------------------------------------
+# Create a SpatialPointsDataFrame to save as ESRI shapefile 
+#---------------------------------------------------------------------
 
 coords <- BS_1[,c("Lon", "Lat")]
 head(coords)
