@@ -2,8 +2,15 @@
 # according to three different biosecurity levels (BS). 
 # We use a file "nodes.csv" that has coordinates for every farm and their respective BS level 
 # defined as "high" (1), "medium" (2), or "low" (3).
+# As base raster, we use a raster with the correct extent and spatial resolution. In this case,
+# it is a raster model corresponding to wild boar distribution in Argentina:
 
-# El raster del modelo de jabalí (ENM_argentina) se utiliza como "base".
+# class      : Extent 
+# xmin       : -74.003213 
+# xmax       : -52.991619 
+# ymin       : -55.461986 
+# ymax       : -20.993628
+
 
 # Paquetes y librerías
 
@@ -16,13 +23,14 @@ sapply(pkgs, function(x) library(x, character.only = TRUE))
 options(digits = 8)
 options(max.print = 1000)
 
-#-----------------------------------------------------------------------------------
-# Uso del raster de modelo final para jabalí para generar un raster de Argentina
-#-----------------------------------------------------------------------------------
+#------------------------------------------------------------
+# Base raster 
+#------------------------------------------------------------
 
-arg_ras <- raster("D:/CIC/Analisis/MNE_jabali/Modelling/Final_model_rasters/WB.tif")
+arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/WB.tif")
+raster_extent <- extent(arg_ras); print(raster_extent)
 
-# Reemplazo no NA's por ceros
+# Replace no NA's with ceroes (base raster has unneeded values)
 
 arg_ras[!is.na(arg_ras[])] <- 0  # Estos ceros reemplazan el valor inicial de cada pixel con valor
 plot(arg_ras)
@@ -35,9 +43,7 @@ which(arg_ras@data@values == 0)  # 34467
 which(is.na(arg_ras@data@values))  # 47965 NAs
 
 #---------------------------------------------------------------------
-# BS1
-#---------------------------------------------------------------------
-# Carga de existencias porcinas
+# Loading national swine inventory database 
 #---------------------------------------------------------------------
 
 rm(list=ls(all=TRUE))
@@ -45,21 +51,24 @@ rm(list=ls(all=TRUE))
 options(digits = 8)
 
 nodos <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
-colnames(nodos)
-head(nodos)
+colnames(nodos); head(nodos)
+
+#---------------------------------------------------------------------
+# BS1
+#---------------------------------------------------------------------
 
 # Subset each BS level
 
-BS_1 <- subset(nodos, BS == "Alto", select = c(Lat, Lon, BS))
+BS_1 <- subset(nodos, BS == "High", select = c(Lat, Lon, BS))
 
 length(BS_1$Lat)  # 37
 
-which(is.na(BS_1$Lat | BS_1$Lon))  # 0
+which(is.na(BS_1$Lat|BS_1$Lon))  # 0
 
 #---------------------------------------------------------------------  
-# Creo nueva variable que combine Lat y Lon para asegurarme de tener 
-# registros unicos. Se usa la diferencia entre Lat y Lon para generar 
-# un numero unico
+# Create a new variable combining longitude and latitude to make sure 
+# that only unique records are present. We use the idfferent between  
+# latitude and longitude to derive a unique number
 #---------------------------------------------------------------------
 
 BS_1$COORDS_COMB <- BS_1$Lat-BS_1$Lon
