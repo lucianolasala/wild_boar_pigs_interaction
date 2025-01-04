@@ -11,15 +11,13 @@
 # ymin       : -55.461986 
 # ymax       : -20.993628
 
-
-# Paquetes y librerías
+#---------------------------------------------------------------------
+# Paquetes, librerías, and other setting
+#---------------------------------------------------------------------
 
 rm(list=ls(all=TRUE))
-
 pkgs <- c("raster","rgdal","sf")
-
 sapply(pkgs, function(x) library(x, character.only = TRUE)) 
-
 options(digits = 8)
 options(max.print = 1000)
 
@@ -46,10 +44,6 @@ which(is.na(arg_ras@data@values))  # 47965 NAs
 # Loading national swine inventory database 
 #---------------------------------------------------------------------
 
-rm(list=ls(all=TRUE))
-
-options(digits = 8)
-
 nodos <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
 colnames(nodos); head(nodos)
 
@@ -58,11 +52,8 @@ colnames(nodos); head(nodos)
 #---------------------------------------------------------------------
 
 # Subset each BS level
-
 BS_1 <- subset(nodos, BS == "High", select = c(Lat, Lon, BS))
-
 length(BS_1$Lat)  # 37
-
 which(is.na(BS_1$Lat|BS_1$Lon))  # 0
 
 #---------------------------------------------------------------------  
@@ -73,10 +64,8 @@ which(is.na(BS_1$Lat|BS_1$Lon))  # 0
 
 BS_1$COORDS_COMB <- BS_1$Lat-BS_1$Lon
 head(BS_1)
-
 length(BS_1$COORDS_COMB) # 37
 length(unique(BS_1$COORDS_COMB))  # 37
-
 rep_coords <- BS_1[duplicated(BS_1$COORDS_COMB),] 
 length(rep_coords$COORDS_COMB)  # 0
 
