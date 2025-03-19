@@ -75,14 +75,11 @@ length(rep_coords$COORDS_COMB)  # 0
 coords <- BS_1[,c("Lon", "Lat")]
 head(coords)
 is.data.frame(coords)
-
-which(is.na(coords$LAT|coords$LONG))  # No hay NAs
-
+which(is.na(coords$LAT|coords$LONG))  # No NAs
 datos <- as.data.frame(BS_1$BS)
 head(datos)
 colnames(datos) <- "BS"
 is.data.frame(datos)
-
 crs <- CRS("+init=epsg:4326")
 spdf <- SpatialPointsDataFrame(coords = coords, data = datos, proj4string = crs)
 
@@ -93,11 +90,10 @@ spdf@data
 writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_1", driver = "ESRI Shapefile", overwrite_layer = T)
 
 #-----------------------------------------------------------------------------
-# Leer shapefile de existencias y raster
+# Load swine inventory (shapefile) and raster
 #-----------------------------------------------------------------------------
 
 rm(list=ls(all=TRUE))
-
 BS1 <- readOGR("D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/BS_1.shp")
 arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km.asc")
 
