@@ -1,11 +1,11 @@
-
-//----------------------------------------------------------------
-// B. Area calculation based on valid risk level pixels
-// This script provides ***much more accurate*** area estimation
-//----------------------------------------------------------------
+#### Area calculation based on valid risk level pixels
+This script provides ***much more accurate*** area estimation
 
 // Calculate pixel area in sq km
+
+```
 var pixelArea = ee.Image.pixelArea().divide(1e6);  // Convert sqm to sq km
+```
 
 // Define the list of risk levels present in your model, including "Absent" (i.e., -9999)
 var riskLevels = [-9999, 1, 2, 3];  
