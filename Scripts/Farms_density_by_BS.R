@@ -1,9 +1,10 @@
 # This script generates three raster layers representing farm density in 100-square km pixels
 # according to three different biosecurity levels (BS). 
-# We use a file "nodes.csv" that has coordinates for every farm and their respective BS level 
-# defined as "high" (1), "medium" (2), or "low" (3).
-# As base raster, we use a raster with the correct extent and spatial resolution. In this case,
-# it is a raster model corresponding to wild boar distribution in Argentina:
+# Condifential farm location data (SENASA) including their respective BS level 
+# defined as "high" (1), "medium" (2), or "low" (3) were used.
+# As base raster, a layer with the correct extent and spatial resolution. 
+# was used. In this case, it is a raster model corresponding to wild boar 
+# distribution in Argentina:
 
 # class      : Extent 
 # xmin       : -74.003213 
@@ -12,7 +13,7 @@
 # ymax       : -20.993628
 
 #---------------------------------------------------------------------
-# Paquetes, librerías, and other setting
+# Packeges, libreries and other setting
 #---------------------------------------------------------------------
 
 rm(list=ls(all=TRUE))
@@ -25,15 +26,14 @@ options(max.print = 1000)
 # Base raster 
 #------------------------------------------------------------
 
-arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/WB.tif")
+arg_ras <- raster(".../base_raster.tif")
 raster_extent <- extent(arg_ras); print(raster_extent)
 
 # Replace no NA's with ceroes (base raster has unneeded values)
-
-arg_ras[!is.na(arg_ras[])] <- 0  # Estos ceros reemplazan el valor inicial de cada pixel con valor
+arg_ras[!is.na(arg_ras[])] <- 0  # Replace values with 0s
 plot(arg_ras)
 summary(arg_ras)  # min and max = 0
-summary(arg_ras@data@values)  # Todos 0 y 47895 NAs
+summary(arg_ras@data@values)  # All 0s and 47895 NAs
 
 writeRaster(arg_ras, filename = "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km", format = "ascii", overwrite = TRUE)
 
