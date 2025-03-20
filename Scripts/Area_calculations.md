@@ -1,27 +1,25 @@
 #### Area calculation based on valid risk level pixels
-This script provides ***much more accurate*** area estimation
-
-// Calculate pixel area in sq km
 
 ```
 var pixelArea = ee.Image.pixelArea().divide(1e6);  // Convert sqm to sq km
+var riskLevels = [-9999, 1, 2, 3];  // Define the list of risk levels present in your model, including "Absent" (i.e., -9999)  
+var results = ee.FeatureCollection([]);  // Create an empty FeatureCollection to store the results for each province and risk level
+```
+##### Step 1: Initialize results collection
+```
+var totalAreaPerProvince = ee.FeatureCollection([]);  // Store the total area of valid pixels for each province
 ```
 
-// Define the list of risk levels present in your model, including "Absent" (i.e., -9999)
-var riskLevels = [-9999, 1, 2, 3];  
-
-// Create an empty FeatureCollection to store the results for each province and risk level
-var results = ee.FeatureCollection([]);
-
-// Step 1: Initialize results collection
-var totalAreaPerProvince = ee.FeatureCollection([]);  // This will store the total area of valid pixels for each province
-
-// Step 2: Iterate over provinces
+##### Step 2: Iterate over provinces
+```
 arg_states.aggregate_array('NAME_1').getInfo().forEach(function(provinceName) {
+```  
   
-  // Step 3: Mask the raster for valid risk levels (including "Absent")
-  var validRiskMask = model.gte(-9999);
-  
+##### Step 3: Mask the raster for valid risk levels (including "Absent")
+```
+var validRiskMask = model.gte(-9999);
+```
+
   // Step 4: Calculate total area for each province (based only on valid pixels)
   var validAreaPerProvince = pixelArea.updateMask(validRiskMask)
     .reduceRegions({
