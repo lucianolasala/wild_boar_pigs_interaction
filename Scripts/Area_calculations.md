@@ -1,4 +1,4 @@
-#### Area calculation based on valid risk level pixels
+#### Area calculation based on valid risk level pixels (JavaScript run in Google Earth Engine)
 
 ```
 var pixelArea = ee.Image.pixelArea().divide(1e6);  // Convert sqm to sq km
@@ -77,21 +77,23 @@ riskLevels.forEach(function(riskLevel) {
 });
 ```
 
-// Step 6: Calculate the percentage of risk areas (including "Absent") relative to the total valid area
+##### Step 6: Calculate the percentage of risk areas (including "Absent") relative to the total valid area
+```
 results = results.map(function(feature) {
   var provinceName = feature.get('NAME_1');
   var totalArea = totalAreaPerProvince.filter(ee.Filter.eq('NAME_1', provinceName)).first();
   var totalValidAreaKm = ee.Number(totalArea.get('Total_Valid_Area_km'));
-  
   var riskAreaKm = ee.Number(feature.get('Risk_Area_km'));
   var percentage = riskAreaKm.divide(totalValidAreaKm).multiply(100);
-  
   return feature.set('Total_Valid_Area_km', totalValidAreaKm)
                 .set('Percentage', percentage)
                 .set('RiskPixelCount', feature.get('RiskPixelCount'));  // Fixed line
 });
+```
 
-// Step 7: Export the results as a CSV file to Google Drive
+##### Step 7: Export the results as a CSV file to Google Drive
+
+```
 Export.table.toDrive({
   folder: 'Wild_boar_pig_interface',
   collection: results,
@@ -99,4 +101,4 @@ Export.table.toDrive({
   fileFormat: 'CSV',
   selectors: ['NAME_1', 'RiskLevel', 'Risk_Area_km', 'RiskPixelCount', 'Total_Valid_Area_km', 'Percentage']  // Choose columns to include
 });
-
+```
