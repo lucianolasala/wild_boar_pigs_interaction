@@ -20,79 +20,62 @@ arg_states.aggregate_array('NAME_1').getInfo().forEach(function(provinceName) {
 var validRiskMask = model.gte(-9999);
 ```
 
-  // Step 4: Calculate total area for each province (based only on valid pixels)
-  var validAreaPerProvince = pixelArea.updateMask(validRiskMask)
+##### Step 4: Calculate total area for each province (based only on valid pixels)
+```
+var validAreaPerProvince = pixelArea.updateMask(validRiskMask)
     .reduceRegions({
-      collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
-      reducer: ee.Reducer.sum(),
-      scale: model.projection().nominalScale(),
-      tileScale: 16
+     collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
+     reducer: ee.Reducer.sum(),
+     scale: model.projection().nominalScale(),
+     tileScale: 16
     })
     .map(function(feature) {
-      
-      // Get the area in square km
-      var totalAreaKm = ee.Number(feature.get('sum'));
+     var totalAreaKm = ee.Number(feature.get('sum'));  // Get the area in square km
       
       return feature.set('Total_Valid_Area_km', totalAreaKm);
     });
-
-  // Add total valid area to the results
-  totalAreaPerProvince = totalAreaPerProvince.merge(validAreaPerProvince);
+  totalAreaPerProvince = totalAreaPerProvince.merge(validAreaPerProvince);  // Add total valid area to the results
 });
 
-// Print to verify total valid area per province
-print('Total valid area per province (based on valid risk pixels):', totalAreaPerProvince);
+print('Total valid area per province (based on valid risk pixels):', totalAreaPerProvince);  // Print to verify total valid area per province
+```
 
-// Step 5: Iterate over risk levels, including -9999 for "Absent"
+##### Step 5: Iterate over risk levels, including -9999 for "Absent", and over provinces
+```
 riskLevels.forEach(function(riskLevel) {
-  // Step 6: Iterate over provinces
   arg_states.aggregate_array('NAME_1').getInfo().forEach(function(provinceName) {
-    
-    // Mask the raster for the current risk level
-    var riskMask = model.eq(riskLevel);
-    
-    // Calculate the area per risk level (in sq km) for valid pixels only
-    var areaPerRiskLevel = pixelArea.updateMask(riskMask)
+    var riskMask = model.eq(riskLevel);  // Mask the raster for the current risk level
+    var areaPerRiskLevel = pixelArea.updateMask(riskMask)  // Calculate the area per risk level (in sq km) for valid pixels only
       .reduceRegions({
-        collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
-        reducer: ee.Reducer.sum(),
+       collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
+       reducer: ee.Reducer.sum(),
         scale: model.projection().nominalScale(),
         tileScale: 16
       })
       .map(function(feature) {
-        // Get the area in square km
-        var riskAreaKm = ee.Number(feature.get('sum'));
-
-        // Label "Absent" areas if the risk level is -9999
-        var riskLevelLabel = riskLevel === -9999 ? 'Absent' : riskLevel;
-
-        return feature.set('RiskLevel', riskLevelLabel)
-                      .set('Risk_Area_km', riskAreaKm);
+       var riskAreaKm = ee.Number(feature.get('sum'));  // Get the area in square km
+       var riskLevelLabel = riskLevel === -9999 ? 'Absent' : riskLevel;  // Label "Absent" areas if the risk level is -9999
+       return feature.set('RiskLevel', riskLevelLabel)
+                     .set('Risk_Area_km', riskAreaKm);
       });
-
-    // Calculate the number of risk-level pixels in the province
-    var riskPixelCount = pixelArea.updateMask(riskMask)
+    var riskPixelCount = pixelArea.updateMask(riskMask)  // Calculate the number of risk-level pixels in the province
       .reduceRegions({
-        collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
-        reducer: ee.Reducer.count(),
-        scale: model.projection().nominalScale(),
-        tileScale: 16
+       collection: arg_states.filter(ee.Filter.eq('NAME_1', provinceName)),
+       reducer: ee.Reducer.count(),
+       scale: model.projection().nominalScale(),
+       tileScale: 16
       })
       .map(function(feature) {
-        return feature.set('RiskPixelCount', feature.get('count'));
+       return feature.set('RiskPixelCount', feature.get('count'));
       });
-
-    // Merge pixel count data into the area calculations
-    areaPerRiskLevel = areaPerRiskLevel.map(function(feature) {
+    areaPerRiskLevel = areaPerRiskLevel.map(function(feature) {  // Merge pixel count data into the area calculations
       var riskPixelFeature = riskPixelCount.filter(ee.Filter.eq('NAME_1', feature.get('NAME_1'))).first();
       return feature.set('RiskPixelCount', ee.Algorithms.If(riskPixelFeature, riskPixelFeature.get('RiskPixelCount'), 0));
     });
-
-    // Add the area calculations for the current risk level and province to the results
-    results = results.merge(areaPerRiskLevel);
+    results = results.merge(areaPerRiskLevel);  // Add the area calculations for the current risk level and province to the results
   });
 });
-
+```
 
 // Step 6: Calculate the percentage of risk areas (including "Absent") relative to the total valid area
 results = results.map(function(feature) {
