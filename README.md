@@ -22,11 +22,10 @@ Table of Contents
 [6. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
 [7. Model validation](./Scripts/Validation_final.R)  
 [8. Discreticize final models](./Scripts/Discreticize_models.R)
+[9. Risk area calculations](./Scripts/Area_calculations.md)
 
 ### Data, rasters, and figures
-[9. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
-[10. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
-
+[10. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
+[11. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 ### Google Earth Engine app development
-[11. Code](./Scripts/GEE_app.md)  
-[12. Link to online map](https://ee-lucianolasala.projects.earthengine.app/view/wild-boar-pigs-interface) *(Right-click and select "Open link in new tab")*
+[12. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
