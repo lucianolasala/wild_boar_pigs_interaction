@@ -27,5 +27,5 @@ Table of Contents
 ### Data, rasters, and figures
 [10. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
 [11. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
-### Google Earth Engine app development
+### Web map
 [12. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
