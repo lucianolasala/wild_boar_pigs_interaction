@@ -23,8 +23,8 @@ Table of Contents
 [8. Discreticize final models](./Scripts/Discreticize_models.R)
 [9. Risk area calculations](./Scripts/Area_calculations.md)
 
-### Data, rasters, and figures
-[10. Data and rasters (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
+### Spatial data and figures
+[10. Raster and vector data (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
 [11. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 ### Web map
 [12. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
