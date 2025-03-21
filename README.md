@@ -15,16 +15,17 @@ Table of Contents
 
 ### Expert elicitation opinion and analytic hierarchy process (AHP)
 
-[3. Individual expert opinion](./Scripts/Expert_opinion_individual_CI.R)  
-[4. Function to overlay expert opinions](./Scripts/Overlays.R)  
-[5. Function to generate PETR distributions](./Scripts/PertDistr.R)  
-[6. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
-[7. Model validation](./Scripts/Validation_final.R)  
-[8. Discreticize final models](./Scripts/Discreticize_models.R)
-[9. Risk area calculations](./Scripts/Area_calculations.md)
+[3. Expert opinion](./Scripts/Expert_opinion.R)  
+[4. Expert opinion validation](./Scripts/Expert_opinion_CIs.R)  
+[5. Function to overlay expert opinions](./Scripts/Overlays.R)  
+[6. Function to generate PETR distributions](./Scripts/PertDistr.R)  
+[7. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
+[8. Model validation](./Scripts/Validation_final.R)  
+[9. Discreticize final models](./Scripts/Discreticize_models.R)
+[10. Risk area calculations](./Scripts/Area_calculations.md)
 
 ### Spatial data and figures
-[10. Raster and vector data (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
-[11. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
+[11. Raster and vector data (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
+[12. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
 ### Web map
-[12. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
+[13. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
