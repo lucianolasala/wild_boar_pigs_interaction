@@ -1,9 +1,6 @@
-# This script streamlines the analysis of the consistency index (CI) for 
-# multiple experts. 
+# This script streamlines the analysis of the consistency index (CI) for multiple experts. 
 
-# Random Index for a 4x4 matrix
-rm(list = ls())
-
+# Random index for a 4x4 matrix
 RI <- 0.9  
 
 # Define matrices for each expert
