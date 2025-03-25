@@ -21,11 +21,11 @@ Table of Contents
 [6. Function to generate PETR distributions](./Scripts/PertDistr.R)  
 [7. Analytic Hierarchy Process](./Scripts/Expert_opinion.R)  
 [8. Model validation](./Scripts/Validation_final.R)  
-[9. Discreticize final models](./Scripts/Discreticize_models.R)
+[9. Discreticize final models](./Scripts/Discreticize_models.R)  
 [10. Risk area calculations](./Scripts/Area_calculations.md)
 
 ### Spatial data and figures
 [11. Raster and vector data (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
-[12. Figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures)  
+[12. Figures & Tables](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures_Tables)    
 ### Web map
 [13. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
