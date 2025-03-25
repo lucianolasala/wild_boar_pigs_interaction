@@ -33,18 +33,18 @@ writeRaster(arg_ras, filename = "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rast
 which(arg_ras@data@values == 0)  
 which(is.na(arg_ras@data@values))  
 
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Processing of farms data by biosefty level
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 # Load farm data
 nodes <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
 colnames(nodes)
 head(nodes)
 
-#--------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Subset BS1 
-#--------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 BS_1 <- subset(nodes, BS == "High", select = c(Lat, Lon, BS))
 length(BS_1$Lat)  # 37
@@ -140,9 +140,9 @@ length(which(values(BS1) %in% c(1,2)))
 table(BS1[])
 
 
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Subset BS2
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 BS_2 <- subset(nodes, BS == "Medium", select = c(Lat, Lon, BS))
 head(BS_2)
@@ -216,22 +216,21 @@ setMinMax(BS2)
 BS2@data@values[1]
 xyFromCell(BS2, 1)
 
-hist(BS2)  # Gran frecuencia de ceros
+hist(BS2)  
 
-hist(BS2[BS2!=0])  # Ademas de ceros, solo existen 1 y 2
+hist(BS2[BS2!=0]) 
 
-sum(values(BS2!=0), na.rm = TRUE)  # 203 pixels with value
+sum(values(BS2!=0), na.rm = TRUE)  
 
-length(which(values(BS2) %in% c(0,1,2,3,4))) # 34468
+length(which(values(BS2) %in% c(0,1,2,3,4))) 
 
 # Frequency table
 
 table(BS2[])
 
-
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Subset BS3
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 # Subset each BS level
 BS_3 <- subset(nodes, BS == "Low", select = c(Lat, Lon, BS))
