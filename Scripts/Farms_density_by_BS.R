@@ -1,131 +1,102 @@
-# This script generates three raster layers representing farm density in 100-square km pixels
-# according to three different biosecurity levels (BS). 
-# Condifential farm location data (SENASA) including their respective BS level 
-# defined as "high" (1), "medium" (2), or "low" (3) were used.
-# As base raster, a layer with the correct extent and spatial resolution. 
-# was used. In this case, it is a raster model corresponding to wild boar 
-# distribution in Argentina:
-
 #---------------------------------------------------------------------
-# Packeges, libreries and other setting
-#---------------------------------------------------------------------
+# This script generates three rasters, each with the number of farms
+# pero 100 sq-km de acuerdo a tres niveles de bioseguridad (BS).
 
+# En el archivo "nodes.csv", tenemos coordenadas de cada granja y nivel de BS como:
+# Alto = 1
+# Medio = 2
+# Bajo = 3
+
+# Paquetes y librerias
 rm(list=ls(all=TRUE))
 pkgs <- c("raster","rgdal","sf")
 sapply(pkgs, function(x) library(x, character.only = TRUE)) 
 options(digits = 8)
 options(max.print = 1000)
 
-#------------------------------------------------------------
-# Load base raster (available) 
-#------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Using the raster of wild boar ENM final model as base raster for Argentina
+#-------------------------------------------------------------------------------
 
-arg_ras <- raster(".../base_raster.tif")
-raster_extent <- extent(arg_ras); print(raster_extent)
+arg_ras <- raster("D:/CIC/Analisis/MNE_jabali/Modelling/Final_model_rasters/ENM_argentina.tif")
 
-# Replace no NA's with ceroes (base raster has unneeded values)
-arg_ras[!is.na(arg_ras[])] <- 0  # Replace values with 0s
+# Replace no NA with 0
+
+arg_ras[!is.na(arg_ras[])] <- 0  
 plot(arg_ras)
-summary(arg_ras)  # min and max = 0
-summary(arg_ras@data@values)  # All 0s and 47895 NAs
+summary(arg_ras) 
+summary(arg_ras@data@values)
 
-writeRaster(arg_ras, filename = ".../Raster_10km", format = "ascii", overwrite = TRUE)
+writeRaster(arg_ras, filename = "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km", format = "ascii", overwrite = TRUE)
 
-which(arg_ras@data@values == 0)  # 34467
-which(is.na(arg_ras@data@values))  # 47965 NAs
+which(arg_ras@data@values == 0)  
+which(is.na(arg_ras@data@values))  
 
-#---------------------------------------------------------------------------
-# Loading national swine inventory database (available only upon request)
-#---------------------------------------------------------------------------
+#---------------------------------------------------------------------
+# Processing of farms data by biosefty level
+#---------------------------------------------------------------------
+
+# Load farm data
+
+rm(list=ls(all=TRUE))
+
+options(digits = 8)
 
 nodes <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
-colnames(nodes); head(nodes)
+colnames(nodes)
+head(nodes)
 
-#---------------------------------------------------------------------
-# BS1: subsetting BS1 farms
-#---------------------------------------------------------------------
+#--------------------------------------------------------------
+# Subset BS1 
+#--------------------------------------------------------------
 
 BS_1 <- subset(nodes, BS == "High", select = c(Lat, Lon, BS))
 length(BS_1$Lat)  # 37
-which(is.na(BS_1$Lat|BS_1$Lon))  # 0
+which(is.na(BS_1$Lat | BS_1$Lon))
 
-#---------------------------------------------------------------------  
-# Create a new variable combining longitude and latitude to make sure 
-# that only unique records are present. We use the difference between  
-# latitude and longitude to derive a unique number ID
-#---------------------------------------------------------------------
+# Create a new variable that combines lat and lon (difference) to make sure that 
+# each farm record is unique.
 
-BS_1$COORDS_COMB <- BS_1$Lat-BS_1$Lon
-length(BS_1$COORDS_COMB) # 37
-length(unique(BS_1$COORDS_COMB))  # 37
+BS_1$COORDS_COMB <- BS_1$Lat-BS_1$Lon; head(BS_1)
+
+length(BS_1$COORDS_COMB) 
+length(unique(BS_1$COORDS_COMB))
+
 rep_coords <- BS_1[duplicated(BS_1$COORDS_COMB),] 
-length(rep_coords$COORDS_COMB)  # 0: there is no repeated nodes
+length(rep_coords$COORDS_COMB)
 
-#---------------------------------------------------------------------
-# Create a SpatialPointsDataFrame to save as ESRI shapefile 
-#---------------------------------------------------------------------
+# Crete a SpatialPointsDataFrame to save as ESRI shapefile 
 
 coords <- BS_1[,c("Lon", "Lat")]
 head(coords)
 is.data.frame(coords)
-which(is.na(coords$LAT|coords$LONG))  # No NAs
-datos <- as.data.frame(BS_1$BS)
-colnames(datos) <- "BS"
-is.data.frame(datos)
-crs <- CRS("+init=epsg:4326")
-spdf <- SpatialPointsDataFrame(coords = coords, data = datos, proj4string = crs)
+which(is.na(coords$LAT|coords$LONG))
 
-class(spdf)  # "SpatialPointsDataFrame"
+data <- as.data.frame(BS_1$BS)
+head(data)
+colnames(data) <- "BS"
+is.data.frame(data)
+
+crs <- CRS("+init=epsg:4326")
+spdf <- SpatialPointsDataFrame(coords = coords, data = data, proj4string = crs)
+
+class(spdf)
 spdf@coords
 spdf@data
 
-writeOGR(spdf,".../Vectors","BS_1", driver = "ESRI Shapefile", overwrite_layer = T)
+writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_1", driver = "ESRI Shapefile", overwrite_layer = T)
 
-#-----------------------------------------------------------------------------
-# Load swine inventory (shapefile) and raster
-#-----------------------------------------------------------------------------
+# Read raster
 
 rm(list=ls(all=TRUE))
-BS1 <- readOGR(".../Vectors/BS_1.shp")
-arg_ras <- raster(".../Rasters/Raster_10km.asc")
 
-#-----------------------------------------------------------------------------
-# Transfor shapefile into data frame
-#-----------------------------------------------------------------------------
+arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km.asc")
 
-BS1.df <- as(BS1, "data.frame"); colnames(BS1.df)
-
-names(BS1.df)[1:3] <- paste(c("BS","x","y")); head(BS1.df)
-
-#-------------------------------------------------------------------------------
-# Crate a SpatialPointsDataFrame 
-#-------------------------------------------------------------------------------
-
-coordenadas <- BS1.df[, c("x", "y")]
-is.data.frame(coordenadas)
-
-which(is.na(coordenadas$x|coordenadas$y))  # No hay NAs
-
-datos <- as.data.frame(BS1.df$BS)
-head(datos)
-is.data.frame(datos)
-colnames(datos) <- "BS"
-
-crs <- CRS("+init=epsg:4326")
-
-#-----------------------------------------------------------------------------
-# Crear objeto SpatialPointsDataFrame
-#-----------------------------------------------------------------------------
-
-spdf <- SpatialPointsDataFrame(coords = coordenadas, data = datos, proj4string = crs)
-
-#-------------------------------------------------------------------------------
 # Function to count farms/pixel
-#-------------------------------------------------------------------------------
 
 pointcount = function(arg_ras, spdf){
   
-  # Raster como input:
+  # Raster as input:
   r2 = arg_ras
   
   # Get the cell index for each point and make a table:
@@ -136,92 +107,72 @@ pointcount = function(arg_ras, spdf){
   return(r2)
 }
 
-#-------------------------------------------------------------------------------
-# Results and final raster exploration
-#-------------------------------------------------------------------------------
+# Result and raster exploration
 
 BS1 = pointcount(arg_ras, spdf)
 plot(BS1)
 
-writeRaster(BS1, filename = ".../Rasters/BS1", format = "ascii", overwrite = TRUE)
+writeRaster(BS1, filename = "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/BS1", format = "ascii", overwrite = TRUE)
 
-BS1 <- raster(".../Rasters/BS1.asc")
+BS1 <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/BS1.asc")
+str(BS1)
 
-setMinMax(BS1) # 0, 2  
+setMinMax(BS1) 
 
 table(BS1[], useNA = "always")
 
 # Lengths
-  
-length(which(BS1[]==0))  # 34430
-length(which(BS1[]==1))   # 37
-length(which(BS1[]==2))   # 0
+length(which(BS1[]==0))
+length(which(BS1[]==1))   
+length(which(BS1[]==2)) 
 
-minValue(BS1)  # 0
-maxValue(BS1)  # 2  
+minValue(BS1)  
+maxValue(BS1)   
 
-BS1@data@min  # 0
-BS1@data@max  # 2  
+BS1@data@min
+BS1@data@max   
 
 xyFromCell(BS1, 1)
 
-hist(BS1)  # Gran frecuencia de ceros
-
-hist(BS1[BS1!=0])  # Ademas de ceros, solo existen 1 y 2
-
-sum(values(BS1!=0), na.rm = TRUE)  # 36 pixels with value
+hist(BS1)
+hist(BS1[BS1!=0])  
+sum(values(BS1!=0), na.rm = TRUE)  
 canProcessInMemory(BS1)
+length(which(values(BS1) %in% c(1,2)))
 
-length(which(values(BS1) %in% c(1,2)))  # 36
-
-# Tabla de frecuencias para granjas BS1 por celda
-
+# Frequency table
 table(BS1[])
 
+
 #---------------------------------------------------------------------
-# BS2
-#---------------------------------------------------------------------
-# Carga de existencias porcinas
+# Subset BS2
 #---------------------------------------------------------------------
 
-rm(list=ls(all=TRUE))
-
-nodos <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
-colnames(nodos)
-head(nodos)
-
-# Subset each BS level
-
-BS_2 <- subset(nodos, BS == "Medio", select = c(Lat, Lon, BS))
+BS_2 <- subset(nodes, BS == "Medium", select = c(Lat, Lon, BS))
 head(BS_2)
-length(BS_2$Lat)  # 213
+length(BS_2$Lat)
 
-which(is.na(BS_2$Lat|BS_2$Lon))  # 0
+which(is.na(BS_2$Lat|BS_2$Lon))
 
-#---------------------------------------------------------------------  
-# Creo nueva variable que combine LAT y LONG para asegurarme de tener 
-# registros unicos. Se usa la diferencia entre LAT y LONG para generar 
-# un numero unico
-#---------------------------------------------------------------------
+# Create a new variable that combines lat and lon (difference) to make sure that 
+# each farm record is unique.
 
 BS_2$COORDS_COMB <- BS_2$Lat-BS_2$Lon
 head(BS_2)
 
-length(BS_2$COORDS_COMB) # 213
-length(unique(BS_2$COORDS_COMB))  # 213
+length(BS_2$COORDS_COMB)
+length(unique(BS_2$COORDS_COMB))
 
 rep_coords <- BS_2[duplicated(BS_2$COORDS_COMB),] 
-length(rep_coords$COORDS_COMB)  # 0
+length(rep_coords$COORDS_COMB)
   
-#-------------------------------------------------------------------------------
-# Creo un SpatialPointsDataFrame para guardar como ESRI shp. 
-#-------------------------------------------------------------------------------
+# Crete a SpatialPointsDataFrame to save as ESRI shapefile 
 
 coords <- BS_2[,c("Lon", "Lat")]
 is.data.frame(coords)
 head(coords)
 
-which(is.na(coords$LAT|coords$LONG))  # No hay NAs
+which(is.na(coords$LAT|coords$LONG))
 
 datos <- as.data.frame(BS_2[,3])
 head(datos)
@@ -231,60 +182,19 @@ crs <- CRS("+init=epsg:4326")
 
 spdf <- SpatialPointsDataFrame(coords = coords, data = datos, proj4string = crs)
 
-class(spdf)  # "SpatialPointsDataFrame"
+class(spdf) 
 spdf@coords
 spdf@data
 
 writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_2", driver = "ESRI Shapefile", overwrite_layer = T)
 
-#-----------------------------------------------------------------------------
-# Leer shapefile de existencias y raster
-#-----------------------------------------------------------------------------
-
-rm(list=ls(all=TRUE))
-
-BS2 <- readOGR("D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/BS_2.shp")
+# Read raster
 arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km.asc")
 
-#-----------------------------------------------------------------------------
-# Transformar shapefile en data frame
-#-----------------------------------------------------------------------------
-
-BS2.df <- as(BS2, "data.frame")
-colnames(BS2.df)
-
-names(BS2.df)[1:3] <- paste(c("BS","x","y"))
-head(BS2.df)
-
-#-------------------------------------------------------------------------------
-# Creo un SpatialPointsDataFrame 
-#-------------------------------------------------------------------------------
-
-coordenadas <- BS2.df[,c("x", "y")]
-is.data.frame(coordenadas)
-
-which(is.na(coordenadas$x | coordenadas$y))  # No hay NAs
-
-datos <- as.data.frame(BS2.df[,c("BS")])
-head(datos)
-is.data.frame(datos)
-colnames(datos) <- "BS"
-
-crs <- CRS("+init=epsg:4326")
-
-#-----------------------------------------------------------------------------
-# Crear objeto SpatialPointsDataFrame
-#-----------------------------------------------------------------------------
-
-spdf <- SpatialPointsDataFrame(coords = coordenadas, data = datos, proj4string = crs)
-
-#-------------------------------------------------------------------------------
-# Funcion para contar granjas / celda
-#-------------------------------------------------------------------------------
-
+# Function to count farms/pixel
 pointcount = function(arg_ras, spdf){
   
-  # Raster como input:
+  # Raster as input:
   r2 = arg_ras
   
   # Get the cell index for each point and make a table:
@@ -295,10 +205,8 @@ pointcount = function(arg_ras, spdf){
   return(r2)
 }
 
-#-------------------------------------------------------------------------------
-# Resultado y exploracion del raster
-#-------------------------------------------------------------------------------
 
+# Result and raster exploration
 BS2 = pointcount(arg_ras, spdf)
 plot(BS2)
 
@@ -307,7 +215,7 @@ writeRaster(BS2, "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/BS2", forma
 BS2 <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/BS2.asc")
 class(BS2)
 
-setMinMax(BS2)  # 0, 4
+setMinMax(BS2)
 
 BS2@data@values[1]
 xyFromCell(BS2, 1)
@@ -320,56 +228,36 @@ sum(values(BS2!=0), na.rm = TRUE)  # 203 pixels with value
 
 length(which(values(BS2) %in% c(0,1,2,3,4))) # 34468
 
-# Tabla de frecuencias para granjas BS1 por celda
+# Frequency table
 
 table(BS2[])
 
-# 0       1       2     3     4 
-# 34273   182     9     3     1
 
 #---------------------------------------------------------------------
-# BS3
+# Subset BS3
 #---------------------------------------------------------------------
-# Carga de existencias porcinas
-#---------------------------------------------------------------------
-
-rm(list=ls(all=TRUE))
-
-options(digits = 8)
-
-nodos <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
-head(nodos)
 
 # Subset each BS level
+BS_3 <- subset(nodes, BS == "Low", select = c(Lat, Lon, BS))
 
-BS_3 <- subset(nodos, BS == "Bajo", select = c(Lat, Lon, BS))
+length(BS_3$Lat)
+which(is.na(BS_3$Lat|BS_3$Lon))
 
-length(BS_3$Lat)  # 4969
-
-which(is.na(BS_3$Lat|BS_3$Lon))  # 0
-
-#---------------------------------------------------------------------  
-# Creo nueva variable que combine LAT y LONG para asegurarme de tener 
-# registros unicos. Se usa la diferencia entre LAT y LONG para generar 
-# un numero unico
-#---------------------------------------------------------------------
-
+# Create a new variable that combines lat and lon (difference) to make sure that 
+# each farm record is unique. 
 BS_3$COORDS_COMB <- BS_3$Lat - BS_3$Lon
 head(BS_3)
 
-length(BS_3$COORDS_COMB) # 4969
-length(unique(BS_3$COORDS_COMB))  # 4969
+length(BS_3$COORDS_COMB)
+length(unique(BS_3$COORDS_COMB))
 
 rep_coords <- BS_3[duplicated(BS_3$COORDS_COMB),] 
-length(rep_coords$COORDS_COMB)  # 20
+length(rep_coords$COORDS_COMB)
 
-# Nota. No se eliminan. Son granjas con misma coordenadas porque deben asignarse 
-# al centro de algún depto./municipio. 
+# Nota. Do not delete repeated records. They are farms with same coordinates 
+# because they were assigned to the centroid of a county 
 
-#-------------------------------------------------------------------------------
-# Creo un SpatialPointsDataFrame para guardar como ESRI shp. 
-#-------------------------------------------------------------------------------
-
+# Crete a SpatialPointsDataFrame to save as ESRI shapefile 
 coords <- BS_3[,c("Lon", "Lat")]
 is.data.frame(coords)
 head(coords)
@@ -390,55 +278,10 @@ spdf@data
 
 writeOGR(spdf,"D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors","BS_3", driver = "ESRI Shapefile", overwrite_layer = T)
 
-#-----------------------------------------------------------------------------
-# Leer shapefile de existencias y raster
-#-----------------------------------------------------------------------------
-
-rm(list=ls(all=TRUE))
-
-BS3 <- readOGR("D:/CIC/Analisis/Wild_boar_pigs_interaction/Vectors/BS_3.shp")
-arg_ras <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Raster_10km.asc")
-
-#-----------------------------------------------------------------------------
-# Transformar shapefile en data frame
-#-----------------------------------------------------------------------------
-
-BS3.df <- as(BS3, "data.frame")
-colnames(BS3.df)
-
-names(BS3.df)[2:3] <- paste(c("x","y"))
-head(BS3.df)
-
-#-------------------------------------------------------------------------------
-# Creo un SpatialPointsDataFrame 
-#-------------------------------------------------------------------------------
-
-coordenadas <- BS3.df[,c("x", "y")]
-is.data.frame(coordenadas)
-
-which(is.na(coordenadas$x | coordenadas$y))  # No hay NAs
-
-datos <- as.data.frame(BS3.df[,c("BS")])
-head(datos)
-is.data.frame(datos)
-colnames(datos) <- "BS"
-
-crs <- CRS("+init=epsg:4326")
-
-
-#-----------------------------------------------------------------------------
-# Crear objeto SpatialPointsDataFrame
-#-----------------------------------------------------------------------------
-
-spdf <- SpatialPointsDataFrame(coords = coordenadas, data = datos, proj4string = crs)
-
-#-------------------------------------------------------------------------------
-# Funcion para contar granjas/celda
-#-------------------------------------------------------------------------------
-
+# Function to count farms/pixel
 pointcount = function(arg_ras, spdf){
   
-  # Raster como input:
+  # Raster as input:
   r2 = arg_ras
   
   # Get the cell index for each point and make a table:
@@ -449,11 +292,7 @@ pointcount = function(arg_ras, spdf){
   return(r2)
 }
 
-
-#-------------------------------------------------------------------------------
-# Resultado y exploracion del raster
-#-------------------------------------------------------------------------------
-
+# Result and raster exploratio
 BS3 = pointcount(arg_ras, spdf)
 plot(BS3)
 
@@ -462,17 +301,13 @@ writeRaster(BS3, filename = "D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/
 BS3 <- raster("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/BS3.asc")
 class(BS3)
 
-setMinMax(BS3)  # 0, 20
+setMinMax(BS3)
+hist(BS3)  
 
-hist(BS3)  # Gran frecuencia de ceros
+hist(BS3[BS3!=0]) 
+sum(values(BS3!=0), na.rm = TRUE)
+length(which(values(BS3) %in% c(1:20)))
 
-hist(BS3[BS3!=0])  # Ademas de ceros, solo existen 1 y 2
-
-sum(values(BS3!=0), na.rm = TRUE)  # 2762 pixels with value
-
-length(which(values(BS3) %in% c(1:20))) # 2762
-
-# Tabla de frecuencias para granjas BS1 por celda
-
+# Frequancy table
 table(BS3[])
 
