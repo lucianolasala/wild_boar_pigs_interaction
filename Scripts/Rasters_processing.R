@@ -1,9 +1,9 @@
 #------------------------------------------------------------------
-# Transforma rasters base a GTiff y estandariza a rango 0-1
+# This script transfors base rasters to GTiff and standardize 
+# their range to the 0-1 interval
 #------------------------------------------------------------------
 
-rm(list=ls())
-
+# Packages
 library(magrittr)
 library(dplyr)
 library(mc2d)  # rpert function
@@ -12,17 +12,11 @@ library(matrixcalc)
 library(tidyverse)
 library(raster)
 
-#------------------------------------------------------------------
 # Transformar rasters de ascii a GTiff
-#------------------------------------------------------------------
-
-rm(list=ls())
-
 path = ("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters/Base")
 
 # List all .asc files in the folder
-asc_files <- list.files(path = path, pattern = "//.asc$", full.names = TRUE)
-asc_files
+asc_files <- list.files(path = path, pattern = "//.asc$", full.names = TRUE); asc_files
 
 # Loop through each .asc file
 for (asc_file in asc_files) {
@@ -39,13 +33,8 @@ for (asc_file in asc_files) {
   cat("Converted:", basename(asc_file), "to", basename(tif_file), "/n")
 }
 
-#------------------------------------------------------------------
 # Standardize rasters layers to have values between 0-1
-#------------------------------------------------------------------
-
-setwd("D:/CIC/Analisis/Wild_boar_pigs_interaction/Rasters")
-
-rm(list = ls())
+setwd(".../Rasters")
 
 bs1 <- raster("./Base/BS1.tif")
 bs2 <- raster("./Base/BS2.tif")
@@ -54,8 +43,7 @@ wb <- raster("./Base/WB.tif")
 
 path = ("./Base/")
 
-files <- list.files(path = path, pattern = ".tif$", full.names = TRUE)
-files
+files <- list.files(path = path, pattern = ".tif$", full.names = TRUE); files
 
 # Raster list
 raster_list <- list(bs1, bs2, bs3, wb)
