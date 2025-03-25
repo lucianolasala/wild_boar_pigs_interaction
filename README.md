@@ -26,6 +26,6 @@ Table of Contents
 
 ### Spatial data and figures
 [11. Raster and vector data (to process) figures](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Data)  
-[12. Figures & Tables](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures_Tables)    
+[12. Figures and Tables](https://github.com/lucianolasala/wild_boar_pigs_interaction/tree/main/Figures_Tables)    
 ### Web map
 [13. Link to online map](https://giecon.shinyapps.io/wild_boar_pigs_interaction/) *(Right-click and select "Open link in new tab")*
