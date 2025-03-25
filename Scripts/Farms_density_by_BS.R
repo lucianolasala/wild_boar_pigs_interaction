@@ -1,27 +1,28 @@
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # This script generates three rasters, each with the number of farms
 # pero 100 sq-km de acuerdo a tres niveles de bioseguridad (BS).
+#-------------------------------------------------------------------------------
+# The snalysis uses two inputs:
+# (1) A file called "nodes.csv" has lon/lat of each farm and biosafety level as:
+# High = 1; Medium = 2; Low = 3. These farm data was sourced from SENASA. Please
+# contact Andrea Marcos (SENASA) if needed.  
+# (2) A file called "ENM_argentina.tif", which is a raster file corresponding to 
+# the wild boar ecological niche model developed in La Sala et al. (2023):  
+# "Wild pigs and their widespread threat to biodiversity conservation in
+# South America. Journal for Nature Conservation, 73, 126393". 
+#-------------------------------------------------------------------------------
 
-# En el archivo "nodes.csv", tenemos coordenadas de cada granja y nivel de BS como:
-# Alto = 1
-# Medio = 2
-# Bajo = 3
-
-# Paquetes y librerias
+# Loading packages and libraries
 rm(list=ls(all=TRUE))
 pkgs <- c("raster","rgdal","sf")
 sapply(pkgs, function(x) library(x, character.only = TRUE)) 
 options(digits = 8)
 options(max.print = 1000)
 
-#-------------------------------------------------------------------------------
 # Using the raster of wild boar ENM final model as base raster for Argentina
-#-------------------------------------------------------------------------------
-
 arg_ras <- raster("D:/CIC/Analisis/MNE_jabali/Modelling/Final_model_rasters/ENM_argentina.tif")
 
-# Replace no NA with 0
-
+# Replacing no NAs with 0
 arg_ras[!is.na(arg_ras[])] <- 0  
 plot(arg_ras)
 summary(arg_ras) 
@@ -37,11 +38,6 @@ which(is.na(arg_ras@data@values))
 #---------------------------------------------------------------------
 
 # Load farm data
-
-rm(list=ls(all=TRUE))
-
-options(digits = 8)
-
 nodes <- read.csv("D:/CIC/Analisis/Wild_boar_pigs_interaction/Datos/nodes.csv", sep = ",")
 colnames(nodes)
 head(nodes)
