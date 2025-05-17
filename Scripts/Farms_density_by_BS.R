@@ -1,7 +1,7 @@
-#-------------------------------------------------------------------------------
-# This script generates three rasters, each with the number of farms
-# pero 100 sq-km de acuerdo a tres niveles de bioseguridad (BS).
-#-------------------------------------------------------------------------------
+
+This script generates three rasters, each with the number of farms
+per 100 sq-km de acuerdo a tres niveles de bioseguridad (BS).
+
 # The snalysis uses two inputs:
 # (1) A file called "nodes.csv" has lon/lat of each farm and biosafety level as:
 # High = 1; Medium = 2; Low = 3. These farm data was sourced from SENASA. Please
