@@ -1,4 +1,4 @@
-
+#------------------------------------------------------------------------------------------------------
 # This script generates three rasters, each with the number of farms
 # per 100 sq-km de acuerdo a tres niveles de bioseguridad (BS).
 # The analysis uses two inputs:
@@ -10,7 +10,7 @@
 # "Wild pigs and their widespread threat to biodiversity conservation in
 # South America. Journal for Nature Conservation, 73, 126393".
 # Contact the corresponding author if needed.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
 
 # Loading packages and libraries
 rm(list=ls(all=TRUE))
